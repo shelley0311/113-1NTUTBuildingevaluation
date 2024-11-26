@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<script src="./dist/echarts.min410rc2.js"></script>
+<script src="./dist/echarts-gl11.min.js"></script>
+<script src="./dist/simplex-noise.js"></script>
+<script src="./dist/turf.min.js" charset="utf-8"></script>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script&gt;
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css&#39; rel='stylesheet' />
+
+<script type="text/javascript" src="./dist/jquery-3.2.1.min.js"></script>
+<script src="map.js"></script>
+<link type="text/css" rel="stylesheet" href="style.css">
+<link type="text/css" rel="stylesheet" href="./dist/jquery.toast.min.css">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 處理畫面有時過度放大的問題 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>無人機地圖</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Mapbox CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+</head>
+
+<body scroll="no" style="overflow: hidden">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="1.index.html">Project Overview</a></li>
+                <li><a href="2.status.html">建築現況</a></li>
+                <li><a href="3.map.html" class="active">無人機路徑圖</a></li>
+                <li><a href="4.about.html">關於北科</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="main">
+        <div id='map'></div>
+    </div>
+
+    <script type="text/javascript">
+        //設定地圖出現時的中心座標點。
+        let centerCoord = [25.04322466219143, 121.53455266895202];
+        //設定數據高度。
+        let dataHeight = 10;
+
+        init(centerCoord);
+        loadMap();
+
+        var ntustBoundaryA = [
+            [121.5330177757502, 25.04262384712401], // 點 1
+            [121.53309736585662, 25.044265536669435], // 點 1
+            [121.53363380766913, 25.04422665617549],  // 點 2
+            [121.53388057090287, 25.044353017735745], // 點 3
+            [121.53406832553726, 25.044260676608374], // 點 4
+            [121.53412953564475, 25.044203072766408],
+            [121.53431460807771, 25.044203072766408],
+            [121.53434679458778, 25.0441083014886],
+            [121.5344567651639, 25.04408157111495],
+            [121.5344567651639, 25.04398679973847],
+            [121.53524801687523, 25.04398679973847],
+            [121.53524801687523, 25.04374136584567]
+            // 點 
+        ];
+
+        var ntustBoundaryB = [
+            [121.5354472591137, 25.043422929042833], // 點 1
+            [121.5354472591137, 25.043735559154293], // 點 2
+            [121.53617117745439, 25.04369204812496], // 點 3
+            [121.53636429651004, 25.04207848971417], // 點 4
+            [121.53548989635252, 25.042243734628958] // 點 5
+        ];
+
+        var ntustBoundaryC = [
+            [121.53527833346531, 25.042596049647827],
+            [121.53532896380992, 25.043570545966222],
+            [121.53364990093878, 25.043570545966222],
+            [121.53363917210255, 25.042632545294797],//4
+            [121.53386984208191, 25.042632545294797],//5
+            [121.53386984208191, 25.042711991708476],//6
+            [121.53418451197122, 25.042711991708476],
+            [121.53418451197122, 25.042596049647827],
+            [121.53478815476193, 25.042596049647827], //9
+            [121.53485893868812, 25.04240869937868],
+            [121.53514915279031, 25.042408469937868],
+            [121.53514915279031, 25.042596049647827]
+        ];
+        //左右 上下
+
+
+
+        var pointsA = createRoute(ntustBoundaryA);
+        var pointsB = createRoute(ntustBoundaryB);
+
+        var pointsC = createRoute(ntustBoundaryC);
+
+
+
+
+        //輸入中心點與正方形半徑(KM)
+        // var points = createStarCoords(centerCoord, 0.3);                 //輸入中心點與米字半徑(KM)
+        // var points = createFunnelCoords(centerCoord, 0.3);               //輸入中心點與漏斗形半徑(KM)
+        // var points = createCircleCoords(centerCoord, 0.3);               //輸入中心點與圓形半徑(KM)
+        // var points = createSpringCoords(centerCoord, 0.2, 5, 10, 200);    //輸入中心點, 圓形半徑(KM), 圓圈數, 最低高度(m), 最高高度(m)
+        // var points = createPyramidCoords(centerCoord, 0.3, 0.97, 9, 20, dataHeight)  //輸入中心點、正方形半徑(KM), 遞減半徑比例, 層數, 層高(m), 最低高度(m)
+
+        loadScatterFlightPlanPath(pointsA, "Route A");
+        loadScatterFlightPlanPath(pointsB, "Route B");
+        loadScatterFlightPlanPath(pointsC, "Route C");
+        // loadScatterFlightPlanPath(points.concat(points1));
+        console.log(pointsA);
+        console.log(pointsB);
+        console.log(pointsC);
+    </script>
+</body>
+
+</html>

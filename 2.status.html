@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北科大地圖</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Mapbox CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="1.index.html">Project Overview</a></li>
+                <li><a href="2.status.html" class="active">建築現況</a></li>
+                <li><a href="3.map.html">無人機路徑圖</a></li>
+                <li><a href="4.about.html">關於北科</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="map"></div>
+    <div id="info">
+        <button id="close-btn">×</button>
+        <div class="image-container">
+            <img id="building-img-1" src="" alt="建築照片 1">
+            <img id="building-img-2" src="" alt="建築照片 2" style="display: none;">
+        </div>
+        <h2 id="building-name">教學大樓</h2>
+        <p id="building-status">狀況</p>
+        <p id="building-description">描述</p>
+    </div>
+    
+    <!-- Mapbox JS -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYmlhYm9ibyIsImEiOiJjamVvejdlNXQxZnBuMndtdWhiZHRuaTNpIn0.PIS9wtUxm_rz_IzF2WFD1g';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v10',
+            center: [121.53455266895202, 25.04322466219143],
+            zoom: 17.5
+        });
+
+        // 標點資訊數組 (每個對象包含名稱、經緯度坐標、狀況和圖片)
+        const points = [
+            {
+                name: "第一教學大樓",
+                coords: [121.533905, 25.04344],
+                status: "無龜裂",
+                imgSrc1: "圖片/一教.png",
+                description: "其他描述。"
+            },
+            {
+                name: "第二教學大樓",
+                coords: [121.5345, 25.04343],
+                status: "有裂縫",
+                imgSrc1: "圖片/二教.png",
+                description: "其他描述。"
+            },
+            {
+                name: "第三教學大樓",
+                coords: [121.53449370526059, 25.042815],
+                status: "無龜裂",
+                imgSrc1: "圖片/三教.png",
+                imgSrc2: "圖片/三教2.png",
+                description: "其他描述。"
+            },
+            {
+                name: "第六教學大樓",
+                coords: [121.53388, 25.0438],
+                status: "無龜裂",
+                imgSrc1: "圖片/六教.png",
+                imgSrc2: "圖片/六教2.png",
+                description: "其他描述。"
+            },
+            {
+                name: "光華館",
+                coords: [121.53338, 25.044015],
+                status: "無龜裂",
+                imgSrc1: "圖片/光華.png",
+                imgSrc2: "圖片/光華超裂.png",
+                description: "其他描述。"
+            },
+            {
+                name: "國父百年紀念館",
+                coords: [121.533405, 25.043788],
+                status: "無龜裂",
+                imgSrc1: "圖片/國百.png",
+                description: "其他描述。"
+            },
+            {
+                name: "宏裕科技研究大樓",
+                coords: [121.533885, 25.0440225],
+                status: "無龜裂",
+                imgSrc1: "圖片/科研.png",
+                description: "其他描述。"
+            },
+            {
+                name: "校友會館",
+                coords: [121.53429, 25.04406],
+                status: "無龜裂",
+                imgSrc1: "圖片/校友會.png",
+                description: "其他描述。" 
+            },
+            {
+                name: "化學工程館",
+                coords: [121.53441416828825, 25.043858],
+                status: "無龜裂",
+                imgSrc1: "圖片/化工.png",
+                description: "其他描述。" 
+            },
+            {
+                name: "分子科學工程館",
+                coords: [121.534915, 25.043858],
+                status: "無龜裂",
+                imgSrc1: "圖片/分子.png",
+                description: "其他描述。"
+            },
+            {
+                name: "中正紀念館",
+                coords: [121.5358, 25.04351],
+                status: "無龜裂",
+                imgSrc1: "圖片/中正館2.png",
+                description: "其他描述。"
+            },
+            {
+                name: "綜合科館",
+                coords: [121.53591, 25.0427],
+                status: "無龜裂",
+                imgSrc1: "圖片/綜科.png",
+                description: "其他描述。"
+            },
+            {
+                name: "化學館",
+                coords: [121.53507, 25.043415],
+                status: "無龜裂",
+                imgSrc1: "圖片/化學館.png",
+                description: "其他描述。"
+            },
+            {
+                name: "圖書館",
+                coords: [121.53484, 25.043025],
+                status: "無龜裂",
+                imgSrc1: "圖片/圖書館.png",
+                description: "其他描述。"
+            },
+            {
+                name: "行政大樓",
+                coords: [121.535089, 25.04273],
+                status: "無龜裂",
+                imgSrc1: "圖片/行政大樓.png",
+                description: "其他描述。"
+            },
+            {
+                name: "藝文中心",
+                coords: [121.534975, 25.042505],
+                status: "無龜裂",
+                imgSrc1: "圖片/藝文中心.png",
+                description: "其他描述。"
+            },
+            {
+                name: "紅樓",
+                coords: [121.5345369, 25.04319,],
+                status: "無龜裂",
+                imgSrc1: "圖片/紅樓.png",
+                imgSrc2: "圖片/紅樓2.png",
+                description: "其他描述。"
+            },
+            {
+                name: "迴廊",
+                coords: [121.534019, 25.04279],
+                status: "無龜裂",
+                imgSrc1: "圖片/迴廊.png",
+                description: "其他描述。"
+            },
+            {
+                name: "共同科館",
+                coords: [121.5344, 25.04246],
+                status: "無龜裂",
+                imgSrc1: "圖片/共科.png",
+                description: "其他描述。"
+            },
+            {
+                name: "土木館",
+                coords: [121.533395, 25.04336],
+                status: "無龜裂",
+                imgSrc1: "圖片/土木.png",
+                description: "其他描述。"
+            },
+            {
+                name: "材資館",
+                coords: [121.53337, 25.04300493262406],
+                status: "無龜裂",
+                imgSrc1: "圖片/材資.png",
+                description: "其他描述。"
+            },
+            {
+                name: "設計館",
+                coords: [121.53335, 25.04262],
+                status: "無龜裂",
+                imgSrc1: "圖片/設計館.png",
+                imgSrc2: "圖片/設計館2.png",
+                description: "其他描述。"
+            }
+        ];
+
+        // 為每個標點創建自定義標記
+        points.forEach(point => {
+            const el = document.createElement('div');
+            el.className = 'custom-marker';
+            el.style.cursor = 'pointer';  // 確保它是可點擊的
+            el.textContent = point.name;
+
+            // 添加標記
+            new mapboxgl.Marker(el)
+                .setLngLat(point.coords)
+                .addTo(map);
+
+            // 點擊事件顯示資訊
+            el.addEventListener('click', function() {
+                document.getElementById('info').style.display = 'block';
+                document.getElementById('building-name').textContent = point.name;
+                document.getElementById('building-status').textContent = `狀況: ${point.status}`;
+                document.getElementById('building-img-1').src = point.imgSrc1;
+
+                if (point.imgSrc2) {
+                    document.getElementById('building-img-2').src = point.imgSrc2;
+                    document.getElementById('building-img-2').style.display = 'block';
+                } else {
+                    document.getElementById('building-img-2').style.display = 'none';
+                }
+
+                document.getElementById('building-description').textContent = point.description;
+            });
+        });
+        
+        // 關閉資訊欄
+        document.getElementById('close-btn').addEventListener('click', function() {
+            document.getElementById('info').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
