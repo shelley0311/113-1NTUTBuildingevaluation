@@ -293,3 +293,29 @@ iframe {
     background: #4CAF50;
     cursor: pointer;
 }
+
+#building-status {
+    text-align: justify; /* 左對齊 */
+    margin-left: 50px; /* 邊距 */
+    margin-bottom: 10px;
+}
+
+#building-description-container {
+    max-height: 190px; /* 設置最大高度 */
+    overflow-y: hidden; /* 添加垂直滾動條 */
+    overflow-y: scroll; /* 允許垂直滾動 */
+    text-align: justify; /* 左對齊 */
+    margin-left: 50px; /* 邊距 */
+    margin-right: 45px; /* 邊距 */
+}
+
+/* 隱藏滾動條 */
+#building-description-container::-webkit-scrollbar {
+    display: none; /* 隱藏滾動條 */
+}
+
+/* 新增 CSS 以增加描述中換行處的距離 */
+.line-break {
+    display: block; /* 使其成為塊級元素 */
+    margin-bottom: 5px; /* 設定換行後的距離 */
+}
