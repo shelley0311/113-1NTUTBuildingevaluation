@@ -297,6 +297,7 @@ iframe {
 #building-status {
     text-align: justify; /* 左對齊 */
     margin-left: 50px; /* 邊距 */
+    margin-right: 40px; /* 邊距 */
     margin-bottom: 10px;
 }
 
@@ -306,7 +307,7 @@ iframe {
     overflow-y: scroll; /* 允許垂直滾動 */
     text-align: justify; /* 左對齊 */
     margin-left: 50px; /* 邊距 */
-    margin-right: 45px; /* 邊距 */
+    margin-right: 40px; /* 邊距 */
 }
 
 /* 隱藏滾動條 */
