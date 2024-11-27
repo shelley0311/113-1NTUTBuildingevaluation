@@ -30,7 +30,7 @@
             <img id="building-img-2" src="" alt="建築照片 2" style="display: none;">
         </div>
         <h2 id="building-name">教學大樓</h2>
-        <h4 id="building-status">狀況</h4>
+        <p id="building-status" style="text-align: justify; width: 100%; font-weight: bold; margin-left: 105px; margin-right: 0;">狀況</p>
         <div id="building-description-container" style="text-align: justify;">
             <p id="building-description">描述</p>
         </div>
@@ -168,7 +168,7 @@
                 name: "紅樓",
                 coords: [121.5345369, 25.04319,],
                 status: "牆面無明顯損壞",
-                imgSrc1: "圖片/紅樓.png",
+                imgSrc1: "���片/紅樓.png",
                 imgSrc2: "圖片/紅樓2.png",
                 description: "建築物樓層:2層<span class='line-break'></span>基礎狀態: 無下沉跡象<span class='line-break'></span>簡介:臺北科大紅樓建於1926年（民國15年），為僅存之第一批校舍建物，牆體均為紅磚砌成故稱紅樓。窗臺下的通氣孔，為鑄鐵製成，並鑲有工業學校時期的校徽。整座建築以精緻的磚工表現出嚴謹比例之設計精神，在科技大學校史上及臺灣所存20世紀初期的校園建築中皆具有歷史文化價值。"
             },
@@ -224,7 +224,7 @@
 
             // 點擊事件顯示資訊
             el.addEventListener('click', function () {
-                document.getElementById('info').style.display = 'block';
+                document.getElementById('info').style.display = 'flex';
                 document.getElementById('building-name').textContent = point.name;
                 document.getElementById('building-status').textContent = `狀況: ${point.status}`;
                 document.getElementById('building-img-1').src = point.imgSrc1;
